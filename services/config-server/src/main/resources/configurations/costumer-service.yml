@@ -1,0 +1,12 @@
+server:
+  port: 8090
+
+spring:
+  data:
+    mongodb:
+      username: devsouzx
+      password: joaoemanuel19
+      host: localhost
+      port: 27017
+      database: costumer
+      authentication-database: admin
