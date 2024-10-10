@@ -11,15 +11,17 @@ import com.devsouzx.order.payment.PaymentRequest;
 import com.devsouzx.order.product.ProductClient;
 import com.devsouzx.order.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository repository;
     private final OrderMapper mapper;
     private final CustomerClient customerClient;
@@ -47,7 +49,6 @@ public class OrderService {
                     )
             );
         }
-
         var paymentRequest = new PaymentRequest(
                 request.amount(),
                 request.paymentMethod(),
@@ -74,7 +75,7 @@ public class OrderService {
         return this.repository.findAll()
                 .stream()
                 .map(this.mapper::fromOrder)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public OrderResponse findById(Integer id) {
